@@ -2,6 +2,7 @@
 
 #include <string>
 #include "d3dHead.h"
+#include "d3d/Timer.h"
 
 namespace RainDX
 {
@@ -30,6 +31,7 @@ namespace RainDX
         void CheckMsaa();
         void CreateRtvAndDsv();
         void ClearCmdQueue();
+        void FrameRate() const;
 
     public:
         HINSTANCE Inst() const;
@@ -75,9 +77,7 @@ namespace RainDX
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_RtvHeap;
         // 深度模板视图
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_DsvHeap;
-
-
-
+        
         D3D12_VIEWPORT m_ScreenView;
         D3D12_RECT m_ScissorRect;
 
@@ -95,6 +95,7 @@ namespace RainDX
         // MSAA 等级
         UINT m_4xMsaaQuality = 0; 
 
+        Timer m_Timer;
 
     private:
         static LRESULT MsgHandler(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);

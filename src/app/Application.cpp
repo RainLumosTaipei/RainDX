@@ -32,6 +32,7 @@ bool RainDX::Application::Init()
 bool RainDX::Application::Run()
 {
     MSG msg { nullptr };
+    m_Timer.Reset();
 	
     while(msg.message != WM_QUIT)
     {
@@ -41,13 +42,41 @@ bool RainDX::Application::Run()
             DispatchMessage( &msg );
         }
         else
-        {	
+        {
+            m_Timer.Tick();
+            FrameRate();
             Update();	
             Draw();
         }
     }
     
     return true;
+}
+
+void RainDX::Application::FrameRate() const
+{
+    // 每秒帧数
+    static int frameCnt = 0;
+    static float timeElapsed = 0.0f;
+
+    ++frameCnt;
+
+    // Compute averages over one second period.
+    if( (m_Timer.TotalTime() - timeElapsed) >= 1.0f )
+    {
+        float fps = static_cast<float>(frameCnt); // fps = frameCnt / 1
+        float tpf = 1000.0f / fps;
+
+        std::wstring fpsStr = std::to_wstring(fps);
+        std::wstring tpfStr = std::to_wstring(tpf);
+        std::wstring windowText = m_Title +
+            L"    fps: " + fpsStr +
+            L"    tpf: " + tpfStr + L" ms";
+        SetWindowText(m_Wnd, windowText.c_str());
+        
+        frameCnt = 0;
+        timeElapsed += 1.0f;
+    }
 }
 
 

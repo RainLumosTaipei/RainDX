@@ -199,6 +199,8 @@ void RainDX::Application::ClearCmdQueue()
 	}
 }
 
+
+
 // 事件函数：改变窗口大小
 void RainDX::Application::OnResize()
 {
