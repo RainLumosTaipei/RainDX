@@ -1,0 +1,3 @@
+fxc "color.hlsl" /Od /Zi /T vs_5_0 /E "VS" /Fo "color_vs_debug.cso" /Fc "color_vs_debug.asm"
+
+fxc "color.hlsl" /Od /Zi /T ps_5_0 /E "PS" /Fo "color_ps_debug.cso" /Fc "color_ps_debug.asm"

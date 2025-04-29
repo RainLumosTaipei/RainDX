@@ -16,13 +16,17 @@ namespace RainDX
 
         virtual bool Init();
         virtual bool Run();
+        virtual LRESULT MsgHandler(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
     protected:
         virtual void OnResize();
         virtual void Update() = 0;
         virtual void Draw() = 0;
+        virtual void OnMouseDown(WPARAM btnState, int x, int y);
+        virtual void OnMouseUp(WPARAM btnState, int x, int y);
+        virtual void OnMouseMove(WPARAM btnState, int x, int y);
 
-    protected:
+
         bool InitWnd();
         bool InitDirectX();
         void CreateDevice();
@@ -37,10 +41,10 @@ namespace RainDX
         HINSTANCE Inst() const;
         HWND Wnd() const;
         const std::wstring& Title() const;
-    public:
-        ID3D12Resource* CurBuf()const;
-        D3D12_CPU_DESCRIPTOR_HANDLE CurBufView()const;
-        D3D12_CPU_DESCRIPTOR_HANDLE DepthView()const;
+        float AspectRatio() const;
+        ID3D12Resource* CurBuf() const;
+        D3D12_CPU_DESCRIPTOR_HANDLE CurBufView() const;
+        D3D12_CPU_DESCRIPTOR_HANDLE DepthView() const;
 
     protected:
         HINSTANCE m_Inst = nullptr;
@@ -62,7 +66,7 @@ namespace RainDX
         Microsoft::WRL::ComPtr<ID3D12CommandQueue> m_CmdQueue;
         Microsoft::WRL::ComPtr<ID3D12CommandAllocator> m_CmdAlloc;
         Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> m_CmdList;
-        
+
 
         // 后台缓冲区数量
         static constexpr int m_SwapBufCount = 2;
@@ -73,11 +77,13 @@ namespace RainDX
         // 深度模板缓冲区
         Microsoft::WRL::ComPtr<ID3D12Resource> m_DepthBuf;
 
-        // 渲染目标视图
+        // 渲染目标描述符堆
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_RtvHeap;
-        // 深度模板视图
+        // 深度模板描述符堆
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_DsvHeap;
-        
+        // 常量描述符堆
+        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_CbvHeap = nullptr;
+
         D3D12_VIEWPORT m_ScreenView;
         D3D12_RECT m_ScissorRect;
 
@@ -93,13 +99,21 @@ namespace RainDX
         // 是否支持 MSAA
         bool m_4xMsaaState = false;
         // MSAA 等级
-        UINT m_4xMsaaQuality = 0; 
-
+        UINT m_4xMsaaQuality = 0;
+        // 计时器
         Timer m_Timer;
 
+        bool m_IsPaused = false;
+        bool m_IsMin = false;
+        bool m_IsMax = false;
+        bool m_IsResizing = false; // are the resize bars being dragged?
+        bool m_IsFullScreen = false;
+
     private:
-        static LRESULT MsgHandler(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
         static std::wstring m_WndTitle;
-        
+        static Application* m_App;
+
+    public:
+        static Application* GetApplication();
     };
 }

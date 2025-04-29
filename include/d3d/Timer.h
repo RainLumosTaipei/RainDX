@@ -5,13 +5,13 @@ class Timer
 public:
     Timer();
 
-    float TotalTime() const; 
-    float DeltaTime() const; 
+    float TotalTime() const;
+    float DeltaTime() const;
 
     void Reset(); // Call before message loop.
     void Start(); // Call when unpaused.
-    void Stop();  // Call when paused.
-    void Tick();  // Call every frame.
+    void Stop(); // Call when paused.
+    void Tick(); // Call every frame.
 
 private:
     double m_SecondsPerCount;
@@ -29,5 +29,4 @@ private:
     __int64 m_CurTime;
     // 是否暂停
     bool m_IsStop;
-    
 };

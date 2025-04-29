@@ -9,7 +9,6 @@ namespace RainDX
         SimpleApplication(HINSTANCE inst);
         ~SimpleApplication() override;
 
-
     protected:
         void OnResize() override;
         void Update() override;
