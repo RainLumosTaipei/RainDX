@@ -661,7 +661,6 @@
             <LinkCompiled>true</LinkCompiled>
             <AdditionalIncludeDirectories>;D:\vcpkg\vcpkg-master\installed\x64-windows\include</AdditionalIncludeDirectories>
         </ClCompile>
-        <ClCompile Include="src\d3d\UploadBuffer.cpp"/>
         <ClCompile Include="src\main.cpp"/>
     </ItemGroup>
     <ItemGroup>

@@ -72,6 +72,7 @@ void RainDX::BoxApplication::Update()
     // 更新常量缓冲区的世界矩阵
     ObjConst objConstants;
     XMStoreFloat4x4(&objConstants.WorldViewProj, XMMatrixTranspose(worldViewProj));
+    objConstants.Time = m_Timer.TotalTime();
     m_ConstBuf->CopyData(0, objConstants);
 }
 

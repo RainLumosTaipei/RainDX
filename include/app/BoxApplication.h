@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <DirectXColors.h>
 #include <DirectXMath.h>
 #include <memory>
 #include <vector>
@@ -21,6 +22,8 @@ namespace RainDX
     struct ObjConst
     {
         DirectX::XMFLOAT4X4 WorldViewProj = MathHelper::Identity4x4();
+        DirectX::XMFLOAT4 PulseColor = DirectX::XMFLOAT4(DirectX::Colors::Navy);
+        float Time;
     };
 
     class BoxApplication : public Application
